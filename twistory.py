@@ -55,7 +55,8 @@ def pull_and_save_tweets(api):
 
 
 l = task.LoopingCall(pull_and_save_tweets, api)
-l.start(600.0) # call every ten minutes
+cfg = config.get("twitter")
+l.start(float(cfg.get("interval", 600))) # call every ten minutes
 
 # l.stop() will stop the looping calls
 reactor.run()
