@@ -43,10 +43,15 @@ def pull_and_save_tweets(api):
     cfg = config.get("twitter")
     since_id = get_since_id(maxids, cfg.get("user_name"))
     log.msg(pprint.pformat(since_id))
-    if since_id["id"]:
-        tweets = api.getHomeTimeline(since_id=since_id["id"])
-    else:
-        tweets = api.getHomeTimeline()
+
+    try:
+        if since_id["id"]:
+            tweets = api.getHomeTimeline(since_id=since_id["id"])
+        else:
+            tweets = api.getHomeTimeline()
+    except ValueError, e:
+        log.err(e)
+
     log.msg(len(tweets))
     if tweets:
         messages.insert(tweets)
