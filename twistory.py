@@ -44,6 +44,7 @@ def pull_and_save_tweets(api):
     since_id = get_since_id(maxids, cfg.get("user_name"))
     log.msg(pprint.pformat(since_id))
 
+    tweets = []
     try:
         if since_id["id"]:
             tweets = api.getHomeTimeline(since_id=since_id["id"])
