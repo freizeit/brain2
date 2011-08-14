@@ -57,8 +57,6 @@ def pull_and_save_tweets(api):
     if tweets:
         messages.insert(tweets)
         since_id["id"] = max(int(tweet["id"]) for tweet in tweets)
-    else:
-        since_id["id"] = 0
     maxids.save(since_id)
 
 
