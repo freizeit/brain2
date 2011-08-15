@@ -33,8 +33,10 @@ def get_since_id(coll, user_name):
 
 
 def pull_and_save_tweets(api):
-    conn = pymongo.Connection()
     cfg = config.get("db")
+    uri = "%s:%s@%s/%s" % (
+        cfg.get("user"), cfg.get("password"), cfg.get("host"), cfg.get("db"))
+    conn = pymongo.Connection(uri)
     db = conn[cfg.get("db")]
     messages = db[cfg.get("messages_coll")]
     messages.ensure_index("id")
