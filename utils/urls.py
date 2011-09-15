@@ -27,7 +27,7 @@ def sanitize_urls(tweet):
         seg = seg.strip()
         if not seg:
             continue
-        if seg.startswith("http://"):
+        if URL_RE.match(seg):
             seg = actual_url(seg)
         segs.append(seg)
     return ' '.join(segs)
