@@ -4,6 +4,7 @@
 
 import re
 import urllib2
+from twisted.python import log
 
 
 """
@@ -40,7 +41,8 @@ def actual_url(url):
         u = urllib2.urlopen(url)
     except urllib2.HTTPError, e:
         result = "%s (%s)" % (url, e.code)
-    except urllib2.URLError:
+    except Exception, e:
+        log.err(e)
         result = "%s (500)" % url
     else:
         result = u.geturl()
