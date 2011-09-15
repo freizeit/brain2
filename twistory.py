@@ -58,7 +58,7 @@ def pull_and_save_tweets(api):
     log.msg(len(tweets))
     if tweets:
         for tweet in tweets:
-            tweet.text = urls.sanitize_urls(tweet.text)
+            tweet["text"] = urls.sanitize_urls(tweet["text"])
         messages.insert(tweets)
         since_id["id"] = max(int(tweet["id"]) for tweet in tweets)
     maxids.save(since_id)
