@@ -52,7 +52,7 @@ def pull_and_save_tweets(api):
             tweets = api.getHomeTimeline(since_id=since_id["id"], count=199)
         else:
             tweets = api.getHomeTimeline(count=199)
-    except ValueError, e:
+    except Exception, e:
         log.err(e)
 
     log.msg(len(tweets))
