@@ -58,13 +58,17 @@ def pull_and_save_tweets(api):
     log.msg(len(tweets))
     if tweets:
         for tweet in tweets:
+            if not isinstance(tweet, dict):
+                continue
             try:
                 tweet["text"] = urls.sanitize_urls(tweet["text"])
-            except UnicodeDecodeError:
+            except:
                 pass # not much we can do here
         messages.insert(tweets)
-        since_id["id"] = max(int(tweet["id"]) for tweet in tweets)
-    maxids.save(since_id)
+        ids = [int(tweet["id"]) for tweet in tweets if isinstance(tweet, dict)]
+        if ids:
+            since_id["id"] = max(ids)
+            maxids.save(since_id)
 
 
 l = task.LoopingCall(pull_and_save_tweets, api)
